@@ -1,0 +1,48 @@
+version: "3"
+services:
+    db:
+        #volumes:
+        #    - /opt/secrets/user-api-admin:/run/secrets/mysql-root
+        #     - my-datavolume:/var/lib/mysql   #Uncomment for db persistence
+        ports:
+            - "3310:3306"
+        image: mysql
+        environment:
+                MYSQL_DATABASE: user-api
+                #In the real world it's good idea to store the password and the user in file on the host and bind them with postfix _FILE
+                MYSQL_ROOT_PASSWORD: user-api
+                MYSQL_USER: user-api-admin
+        networks:
+            net:
+                aliases:
+                    - db
+    php:
+        image: user-api
+        depends_on:
+            - db
+        volumes:
+            - .:/code
+        command: ["/code/bin/wait_for_mysql.sh", "db", "cd /code/ && ./bin/docker_afterdeploy.sh prod && php-fpm"]
+        tty: true
+        networks:
+            net:
+                aliases:
+                     - php
+    web:
+        image: nginx:latest
+        ports:
+            - "8097:80"
+        depends_on:
+            - db
+            - php
+        volumes:
+            - .:/code
+            - ./app/config/nginx.conf:/etc/nginx/conf.d/default.conf
+        networks:
+            net:
+                aliases:
+                    - web
+
+networks:
+    net:
+

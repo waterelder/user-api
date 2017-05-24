@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: db
+    database_port: 3306
+    database_name: user-api
+    database_user: user-api-admin
+    database_password: user-api
+    mailer_transport: smtp
+    mailer_host: smtp
+    mailer_user: ~
+    mailer_password: ~
+    secret: afbda49987b31f15f96cad84184600c96134f065
