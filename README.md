@@ -25,6 +25,9 @@ creation
 date
 - Group: name
 
+
+###  [Documentation](docs/DOCS.md)
+
 ### API methods:
 - /users/ fetch(retrieve) list of users
 - /users/ create a user
@@ -34,8 +37,11 @@ date
 - /groups/create a group
 - /groups/id/modify group info
 
-###  [Documentation](docs/DOCS.md)
 
+
+
+
+##### Try it out: [http://178.238.233.88:8040/users/](http://178.238.233.88:8040/users/)
 
 
 
