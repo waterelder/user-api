@@ -11,6 +11,7 @@ services:
                 MYSQL_DATABASE: user-api
                 #In the real world it's good idea to store the password and the user in file on the host and bind them with postfix _FILE
                 MYSQL_ROOT_PASSWORD: user-api
+                MYSQL_PASSWORD: user-api
                 MYSQL_USER: user-api-admin
         networks:
             net:
@@ -31,7 +32,7 @@ services:
     web:
         image: nginx:latest
         ports:
-            - "8097:80"
+            - "8040:80"
         depends_on:
             - db
             - php

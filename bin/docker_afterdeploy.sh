@@ -15,7 +15,6 @@ function post_deploy {
     run php bin/console cache:clear --no-debug --no-warmup --env="$1"
     run php bin/console doctrine:migrations:status --env="$1"
     run php bin/console doctrine:migrations:migrate --no-interaction --env="$1"
-    run php bin/console doctrine:fixtures:load --no-interaction --append --env="$1"
     run chmod -R 777 web/uploads
     run chmod -R 777 var/logs
     run chmod -R 777 var/cache

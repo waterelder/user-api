@@ -1,18 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: lex
- * Date: 19.04.17
- * Time: 15:27.
- */
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Api\Model\OrderState;
-use AppBundle\Entity\Order;
+
+use AppBundle\Entity\UserGroup;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Serializer\Tests\Fixtures\GroupDummyParent;
 
 class LoadGroupsData extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -23,7 +18,21 @@ class LoadGroupsData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
+        $firstGroup = new UserGroup();
+        $firstGroup->setName("XBOX Fans");
 
+
+        $secondGroup = new UserGroup();
+        $secondGroup->setName("PS4 Lovers");
+
+
+        $manager->persist($firstGroup);
+        $manager->persist($secondGroup);
+
+        $manager->flush();
+
+        $this->addReference('firstGroup', $firstGroup);
+        $this->addReference('secondGroup', $secondGroup);
     }
 
     /**
