@@ -36,7 +36,6 @@ date
 
 ###  [Documentation](docs/DOCS.md)
 
-##### Try it out: [http://moneyway.xyz:8040/users/](http://moneyway.xyz:8040/users/)
 
 
 
