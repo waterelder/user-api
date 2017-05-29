@@ -23,7 +23,7 @@ services:
             - db
         volumes:
             - .:/code
-        command: ["/code/bin/wait_for_mysql.sh", "db", "cd /code/ && ./bin/docker_afterdeploy.sh prod && php-fpm"]
+        command: ["/code/bin/wait_for_mysql.sh", "db", "cd /code/ && ./bin/docker_afterdeploy.sh dev && php-fpm"]
         tty: true
         networks:
             net:
