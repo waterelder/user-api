@@ -7,15 +7,15 @@ Powered by Symfony 3.2
 ### Setup:
 ```
 $ git clone https://github.com/waterelder/user-api.git
-$ ./bin/linux_setup
+$ ./bin/linux_setup     # or./bin/setup_mac
 $ php bin/console server:run 0.0.0.0:8000
 ```
-##### OR with Docker
+##### OR using Docker
 
 ```
 $ docker init swarm    #If you have not done this before
 $ docker build -t user-api .
-$ docker stack deploy -c docker-swarm.yml user-api # Or you can deploy in old fasion way: $docker compose -f docker-swarm.yml up -d
+$ docker stack deploy -c docker-swarm.yml user-api   #Or you can do it in old fasion way: $docker compose -f docker-swarm.yml up -d
 ```
 
 

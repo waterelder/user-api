@@ -4,12 +4,10 @@ services:
         #volumes:
         #    - /opt/secrets/user-api-admin:/run/secrets/mysql-root
         #     - my-datavolume:/var/lib/mysql   #Uncomment for db persistence
-        ports:
-            - "3310:3306"
         image: mysql
         environment:
                 MYSQL_DATABASE: user-api
-                #In the real world it's good idea to store the password and the user in file on the host and bind them with postfix _FILE
+                #In the real world it's good idea to store the password and the username in file on the host and bind them with postfix _FILE
                 MYSQL_ROOT_PASSWORD: user-api
                 MYSQL_PASSWORD: user-api
                 MYSQL_USER: user-api-admin
