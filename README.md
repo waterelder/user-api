@@ -4,13 +4,13 @@ Restful API with HATEOAS implementation.
 
 Powered by Symfony 3.2
 
-###Setup:
+### Setup:
 ```
 $ git clone https://github.com/waterelder/user-api.git
 $ ./bin/linux_setup
 $ php bin/console server:run 0.0.0.0:8000
 ```
-#####OR with Docker
+##### OR with Docker
 
 ```
 $ docker init swarm    #If you have not done this before
