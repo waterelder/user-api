@@ -6,19 +6,19 @@ use AppBundle\Api\Exception\ApiProblem;
 use AppBundle\Api\Exception\ApiProblemException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class ExceptionSubscriber implements EventSubscriberInterface
 {
-
     public static function getSubscribedEvents()
     {
         return array(
-            KernelEvents::EXCEPTION => array(
-                array('onKernelException'),
-            ),
+            KernelEvents::EXCEPTION => [
+                ['onKernelException'],
+            ],
         );
     }
 
@@ -26,7 +26,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
     {
         $e = $event->getException();
 
-        $statusCode = $e instanceof HttpExceptionInterface ? $e->getStatusCode() : 500;
+        $statusCode = $e instanceof HttpExceptionInterface ? $e->getStatusCode() : Response::HTTP_INTERNAL_SERVER_ERROR;
 
         if ($e instanceof ApiProblemException) {
             $apiProblem = $e->getApiProblem();

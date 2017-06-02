@@ -15,7 +15,7 @@ class ApiProblem
 
     private static $titles = array(
         self::TYPE_INVALID_REQUEST_BODY_FORMAT => "Can't deserialize",
-        self::TYPE_INTERNAL_ERROR => "Something went wrong",
+        self::TYPE_INTERNAL_ERROR => 'Something went wrong',
         self::TYPE_VALIDATION_ERROR => 'There was a validation error',
         self::TYPE_NOT_FOUND => 'Entity not found in database',
         self::TYPE_SERIALIZATION_ERROR => 'Serialization error',

@@ -1,11 +1,9 @@
-# Learn more about services, parameters and containers at
-# http://symfony.com/doc/current/service_container.html
-parameters:
-    #parameter_name: value
-
 services:
-
     api.exception_subscriber:
         class: AppBundle\Subscriber\ExceptionSubscriber
         tags:
            - { name: kernel.event_subscriber }
+
+    api.response.builder:
+        class: AppBundle\Api\Response\ResponseBuilder
+        arguments: ['@serializer']

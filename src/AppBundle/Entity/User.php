@@ -86,19 +86,16 @@ class User
 
     /**
      * User constructor.
-     * @param $createdAt
      */
     public function __construct()
     {
         $this->createdAt = new DateTime();
     }
 
-
-    public static function getUserStates()
+    public static function getUserStates() : array
     {
         return UserState::getAll();
     }
-
 
     /**
      * @ORM\ManyToOne(targetEntity="UserGroup")
@@ -107,118 +104,68 @@ class User
      */
     private $userGroup;
 
-    /**
-     * @return UserGroup
-     */
-    public function getUserGroup()
+    public function getUserGroup() : UserGroup
     {
         return $this->userGroup;
     }
 
-    /**
-     * @param UserGroup $userGroup
-     */
-    public function setUserGroup($userGroup)
+    public function setUserGroup(?UserGroup $userGroup)
     {
         $this->userGroup = $userGroup;
     }
 
-
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId() : int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFirstName()
+    public function getFirstName() : string
     {
         return $this->firstName;
     }
 
-    /**
-     * @param string $firstName
-     */
-    public function setFirstName($firstName)
+    public function setFirstName(?string $firstName)
     {
         $this->firstName = $firstName;
     }
 
-    /**
-     * @return string
-     */
-    public function getLastName()
+    public function getLastName() : string
     {
         return $this->lastName;
     }
 
-    /**
-     * @param string $lastName
-     */
-    public function setLastName($lastName)
+    public function setLastName(?string $lastName)
     {
         $this->lastName = $lastName;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail() : string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     */
-    public function setEmail($email)
+    public function setEmail(?string $email)
     {
         $this->email = $email;
     }
 
-    /**
-     * @return string
-     */
-    public function getState()
+    public function getState() : string
     {
         return $this->state;
     }
 
-    /**
-     * @param string $state
-     */
-    public function setState($state)
+    public function setState(?string $state)
     {
         $this->state = $state;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt() : DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param DateTime $createdAt
-     */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(?DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
     }
-
-
 }

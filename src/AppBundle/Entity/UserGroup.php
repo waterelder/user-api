@@ -9,6 +9,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints;
@@ -66,34 +67,17 @@ class UserGroup
      */
     private $users;
 
-    /**
-     * @return integer
-     */
-    public function getId()
+    public function getId() : int
     {
         return $this->id;
     }
 
-    /**
-     * @param string $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName($name)
+    public function setName(?string $name)
     {
         $this->name = $name;
     }
@@ -106,19 +90,8 @@ class UserGroup
         return $this->users;
     }
 
-    /**
-     * @param ArrayCollection $users
-     */
-    public function setUsers($users)
+    public function setUsers(Collection $users)
     {
         $this->users = $users;
     }
-
-
-
-
-
-
-
-
 }
