@@ -2,97 +2,109 @@
 
 namespace AppBundle\Controller\Api;
 
-use AppBundle\Api\Exception\ApiProblem;
-use AppBundle\Api\Exception\ApiProblemException;
+use AppBundle\Api\Request\RequestDecoder;
 use AppBundle\Entity\UserGroup;
 use AppBundle\Forms\GroupType;
-use AppBundle\Forms\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/groups")
  */
 class GroupController extends BaseController
 {
-
-
     /**
      * @Route("/", name="get_all_groups")
      * @Method("GET")
      */
     public function getAllGroupsAction()
     {
-        return $this->createResponse($this->getEm()->getRepository('AppBundle:UserGroup')->findAll(), array('Default', 'groups'));
+        return $this
+            ->get('api.response.builder')
+            ->createResponse(
+                $this->getDoctrine()->getRepository('AppBundle:UserGroup')->findAll(),
+                ['Default', 'groups']
+            );
     }
 
-
     /**
-     * @Route("/{id}", name="get_group",  requirements={"id": "\d+"})
+     * @Route("/{id}", name="get_group", requirements={"id": "\d+"})
      * @Method("GET")
+     *
+     * @param UserGroup $group
+     *
+     * @return Response
      */
-    public function getGroupAction($id)
+    public function getGroupAction(UserGroup $group)
     {
-        $group = $this->getEm()->getRepository('AppBundle:UserGroup')->findById($id);
-
-        if (!$group) {
-            throw new ApiProblemException(new ApiProblem(404, ApiProblem::TYPE_NOT_FOUND));
-        }
-
-
-        return $this->createResponse($group, array('Default', 'groups'));
+        return $this
+            ->get('api.response.builder')
+            ->createResponse($group, ['Default', 'groups']);
     }
 
     /**
      * @Route("/", name="create_group")
      * @Method("POST")
+     *
+     * @param Request $request
+     *
+     * @return Response
      */
     public function createGroupAction(Request $request)
     {
+        $form = $this->createForm(GroupType::class, new UserGroup());
+        $form->submit(RequestDecoder::decodeRequestBody($request), ($request->getMethod() !== Request::METHOD_PATCH));
 
-        $newGroup = $this->createAndProcessForm($request, GroupType::class, new UserGroup());
+        if (!$form->isValid()) {
+            $this->throwApiProblemValidationException($form);
+        }
 
-        $this->getEm()->persist($newGroup);
+        $em = $this->getEm();
 
-        $this->getEm()->flush();
+        $em->persist($newGroup);
+        $em->flush();
 
         foreach ($newGroup->getUsers() as $user) {
             $user->setUserGroup($newGroup);
-
         }
-        $this->getEm()->flush();
+        $em->flush();
 
-        return $this->createResponse($newGroup, array('Default', 'groups'), 201);
+        return $this
+            ->get('api.response.builder')
+            ->createResponse($newGroup, ['Default', 'groups'], Response::HTTP_CREATED);
     }
 
-
     /**
-     * @Route("/{id}"), name="update_group")
+     * @Route("/{id}"), name="update_group", requirements={"id": "\d+"})
      * @Method({"PUT", "PATCH"})
+     *
+     * @param $id
+     * @param Request $request
+     *
+     * @return Response
      */
-    public function updateGroupAction($id, Request $request)
+    public function updateGroupAction(UserGroup $group, Request $request)
     {
-        $group = $this->getDoctrine()
-            ->getRepository('AppBundle:UserGroup')
-            ->findById($id);
+        $form = $this->createForm(GroupType::class, $group);
+        $form->submit(RequestDecoder::decodeRequestBody($request), ($request->getMethod() !== Request::METHOD_PATCH));
 
-        $group = $this->createAndProcessForm($request, GroupType::class, $group);
+        if (!$form->isValid()) {
+            $this->throwApiProblemValidationException($form);
+        }
 
-
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getEm();
         $em->persist($group);
         $em->flush();
 
         foreach ($group->getUsers() as $user) {
             $user->setUserGroup($group);
-
         }
-        $this->getEm()->flush();
+        $em->flush();
 
-
-        return $this->createResponse($group, array('Default', 'groups'));
+        return $this
+            ->get('api.response.builder')
+            ->createResponse($group, ['Default', 'groups']);
     }
-
-
 }

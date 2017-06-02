@@ -10,7 +10,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 
-
 /**
  * @Route("/users")
  */
@@ -25,7 +24,6 @@ class UserController extends BaseController
         return $this->createResponse($this->getEm()->getRepository('AppBundle:User')->findAll(), array('Default', 'users'));
     }
 
-
     /**
      * @Route("/{id}", name="get_user",  requirements={"id": "\d+"})
      * @Method("GET")
@@ -38,10 +36,8 @@ class UserController extends BaseController
             throw new ApiProblemException(new ApiProblem(404, ApiProblem::TYPE_NOT_FOUND));
         }
 
-
         return $this->createResponse($user, array('Default', 'users'));
     }
-
 
     /**
      * @Route("/", name="create_user")
@@ -49,18 +45,14 @@ class UserController extends BaseController
      */
     public function createUserAction(Request $request)
     {
-
-        $newUser = $this->createAndProcessForm($request,  UserType::class,  new User());
+        $newUser = $this->createAndProcessForm($request, UserType::class, new User());
 
         $this->getEm()->persist($newUser);
 
         $this->getEm()->flush();
 
-
-
         return $this->createResponse($newUser, array('Default', 'users'), 201);
     }
-
 
     /**
      * @Route("/{id}"), name="update_user")
@@ -72,13 +64,12 @@ class UserController extends BaseController
             ->getRepository('AppBundle:User')
             ->findById($id);
 
-        $user = $this->createAndProcessForm($request,  UserType::class,  $user);
+        $user = $this->createAndProcessForm($request, UserType::class, $user);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
 
         $em->flush();
-
 
         return $this->createResponse($user, array('Default', 'users'));
     }
